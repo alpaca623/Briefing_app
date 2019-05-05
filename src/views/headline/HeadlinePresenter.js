@@ -1,24 +1,48 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { withNavigation } from "react-navigation";
+import { width, height } from "../../constants/Screen";
+import NewsCard from "../../components/NewsCard";
 
 const Container = styled.View``;
 
-const Title = styled.Text``;
+const HorizontalContainer = styled.ScrollView``;
 
-function HeadlinePresenter({ navigation }) {
+const VerticalContainer = styled.ScrollView``;
+
+const Section = styled.View`
+  /* background-color: yellow; */
+  width: ${width}px;
+  /* height: ${height}px; */
+`;
+
+function HeadlinePresenter({ articles, navigation }) {
   return (
     <Container>
-      <TouchableWithoutFeedback
-        onPress={() =>
-          navigation.navigate("WebView", { uri: "https://www.naver.com" })
-        }
+      <HorizontalContainer
+        horizontal={true}
+        pagingEnabled={true}
+        scrollEventThrottle={1}
       >
-        <Title>thank you react-native</Title>
-      </TouchableWithoutFeedback>
+        <Section>
+          <VerticalContainer>
+            {articles ? (
+              articles.map((article, index) => (
+                <NewsCard
+                  key={index}
+                  title={article.title}
+                  uri={article.url}
+                  description={article.description}
+                  urlToImage={article.urlToImage}
+                />
+              ))
+            ) : (
+              <Title>business</Title>
+            )}
+          </VerticalContainer>
+        </Section>
+      </HorizontalContainer>
     </Container>
   );
 }
 
-export default withNavigation(HeadlinePresenter);
+export default HeadlinePresenter;
