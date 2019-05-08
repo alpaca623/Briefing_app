@@ -1,19 +1,33 @@
 import React, { Component } from "react";
+import { FlatList } from "react-native";
 import styled from "styled-components";
 import { width, height } from "../../constants/Screen";
 import NewsCard from "../../components/NewsCard";
+import { withNavigation } from "react-navigation";
 
 const Container = styled.View``;
 
 const HorizontalContainer = styled.ScrollView``;
 
-const VerticalContainer = styled.ScrollView``;
+const VerticalContainer = styled.FlatList``;
 
 const Section = styled.View`
   /* background-color: yellow; */
   width: ${width}px;
   /* height: ${height}px; */
 `;
+
+const newsList = ({ item, index, separators }) => {
+  return (
+    <NewsCard
+      key={index}
+      title={item.title}
+      uri={item.url}
+      description={item.description}
+      urlToImage={item.urlToImage}
+    />
+  );
+};
 
 function HeadlinePresenter({ articles, navigation }) {
   return (
@@ -22,27 +36,14 @@ function HeadlinePresenter({ articles, navigation }) {
         horizontal={true}
         pagingEnabled={true}
         scrollEventThrottle={1}
+        onScrollBeginDrag={() => navigation.navigate("general")}
       >
         <Section>
-          <VerticalContainer>
-            {articles ? (
-              articles.map((article, index) => (
-                <NewsCard
-                  key={index}
-                  title={article.title}
-                  uri={article.url}
-                  description={article.description}
-                  urlToImage={article.urlToImage}
-                />
-              ))
-            ) : (
-              <Title>business</Title>
-            )}
-          </VerticalContainer>
+          <FlatList data={articles} renderItem={newsList} />
         </Section>
       </HorizontalContainer>
     </Container>
   );
 }
 
-export default HeadlinePresenter;
+export default withNavigation(HeadlinePresenter);
