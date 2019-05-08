@@ -3,11 +3,10 @@ import WebViewComponent from "../components/WebViewComponent";
 
 const CreateStackNavigation = (screenObj, screenName, option) => {
   let navigationStack = {};
+  console.log(option);
   navigationStack["" + screenName] = {
     screen: screenObj,
-    navigationOptions: {
-      ...option
-    }
+    navigationOptions: option
   };
 
   navigationStack["WebView"] = {

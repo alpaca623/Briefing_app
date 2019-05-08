@@ -2,7 +2,16 @@ import React from "react";
 import { createAppContainer, createBottomTabNavigator } from "react-navigation";
 import HeadlineContainer from "../views/headline";
 import CreateStackNavigation from "./CreateStackNavigation";
-// import LoadIcon from "../components/LoadIcon";
+import LoadIcon from "../components/LoadIcon";
+
+const navigationOptions = (label, iconName) => {
+  return {
+    tabBarLabel: label,
+    tabBarIcon: ({ tintColor }) => (
+      <LoadIcon name={iconName} type="ionicon" size={20} />
+    )
+  };
+};
 
 const MainNavigation = createAppContainer(
   createBottomTabNavigator(
@@ -10,32 +19,38 @@ const MainNavigation = createAppContainer(
       Business: {
         screen: CreateStackNavigation(HeadlineContainer, "business", {
           title: "경제"
-        })
+        }),
+        navigationOptions: navigationOptions("경제", "business")
       },
       General: {
         screen: CreateStackNavigation(HeadlineContainer, "general", {
           title: "종합"
-        })
+        }),
+        navigationOptions: navigationOptions("일반", "apps")
       },
       Science: {
         screen: CreateStackNavigation(HeadlineContainer, "science", {
           title: "과학"
-        })
+        }),
+        navigationOptions: navigationOptions("과학", "flame")
       },
       Technology: {
         screen: CreateStackNavigation(HeadlineContainer, "technology", {
           title: "기술"
-        })
+        }),
+        navigationOptions: navigationOptions("기술", "build")
       },
       Sport: {
         screen: CreateStackNavigation(HeadlineContainer, "sport", {
           title: "스포츠"
-        })
+        }),
+        navigationOptions: navigationOptions("스포츠", "football")
       },
       Entertainment: {
         screen: CreateStackNavigation(HeadlineContainer, "entertainment", {
           title: "연예"
-        })
+        }),
+        navigationOptions: navigationOptions("연예", "tv")
       }
     },
     {

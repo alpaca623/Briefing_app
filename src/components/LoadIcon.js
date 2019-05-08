@@ -1,14 +1,16 @@
-// import React from "react";
+import React from "react";
+import { Platform } from "react-native";
 
-// import { Ionicons } from "@expo/vector-icons";
+import { Icon } from "react-native-elements";
 
-// export default (name, size, color, navigation, pageName) => {
-//   return (
-//     <Ionicons
-//       onPress={() => navigation.navigate(pageName)}
-//       name={name}
-//       size={20}
-//       color={color}
-//     />
-//   );
-// };
+export default ({ name, size, color, type }) => {
+  return (
+    <Icon
+      // onPress={() => navigation.navigate(pageName)}
+      name={`${Platform.OS === "ios" ? "ios-" : "md-"}${name}`}
+      size={size}
+      color={color}
+      type={type}
+    />
+  );
+};
