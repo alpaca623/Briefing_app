@@ -26,12 +26,13 @@ class HeadlineContainer extends React.Component {
       // error = "error!! email send please. alpaca023@gmail.com";
       console.warn("error", e);
     } finally {
+      console.log(articles)
       this.setState({
         loading: false,
         refreshing: false,
         error,
         articles: this.state.refreshing
-          ? this.state.articles
+          ? articles
           : this.state.articles.concat(articles)
       });
     }
