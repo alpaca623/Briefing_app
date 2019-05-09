@@ -18,7 +18,6 @@ const Section = styled.View`
 `;
 
 const newsList = ({ item, index, separators }) => {
-  console.log(separators);
   return (
     <NewsCard
       key={index}
@@ -49,15 +48,16 @@ function HeadlinePresenter({
           <FlatList
             data={articles}
             renderItem={newsList}
-            onEndReached={() => {
-              moreData();
-            }}
             refreshing={refreshing}
             onRefresh={() => {
               refreshChecking();
             }}
             keyExtractor={(item, index) => index.toString()}
             onEndReachedThreshold={0.2}
+            onEndReached={(info) => {
+              moreData();
+              // console.log(info);
+            }}
           />
         </Section>
       </HorizontalContainer>

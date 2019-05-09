@@ -14,37 +14,32 @@ class HeadlineContainer extends React.Component {
   };
 
   getData = async () => {
-    let articles, error;
-    try {
-      ({
-        data: { articles }
-      } = await requestData.headline(
-        this.props.navigation.state.routeName,
-        this.state.refreshing ? "1" : this.state.page
-      ));
-    } catch (e) {
-      // error = "error!! email send please. alpaca023@gmail.com";
-      console.warn("error", e);
-    } finally {
-      console.log(articles)
-      this.setState({
-        loading: false,
-        refreshing: false,
-        error,
-        articles: this.state.refreshing
-          ? articles
-          : this.state.articles.concat(articles)
-      });
-    }
-  };
-
-  componentDidMount = () => {
+    const { page, refreshing } = this.state;
     const {
       navigation: {
         state: { routeName }
       }
     } = this.props;
-    this.getData();
+    let { articles, error } = this.state;
+    try {
+      ({
+        data: { articles }
+      } = await requestData.headline(routeName, refreshing ? "1" : page));
+    } catch (e) {
+      // error = "error!! email send please. alpaca023@gmail.com";
+      console.warn("error", e);
+    } finally {
+      this.setState({
+        loading: false,
+        refreshing: false,
+        error,
+        articles: refreshing ? articles : this.state.articles.concat(articles)
+      });
+    }
+  };
+
+  componentDidMount = () => {
+    this.state.refreshing ? "" : this.getData();
   };
 
   requestMoreData = () => {
