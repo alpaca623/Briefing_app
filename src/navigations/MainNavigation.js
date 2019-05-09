@@ -4,12 +4,12 @@ import HeadlineContainer from "../views/headline";
 import CreateStackNavigation from "./CreateStackNavigation";
 import LoadIcon from "../components/LoadIcon";
 
-const navigationOptions = (label, iconName) => {
+const commonNavigationOptions = (label, iconName) => {
   return {
     tabBarLabel: label,
     tabBarIcon: ({ tintColor }) => (
       <LoadIcon name={iconName} type="ionicon" size={20} />
-    )
+    ),
   };
 };
 
@@ -20,37 +20,37 @@ const MainNavigation = createAppContainer(
         screen: CreateStackNavigation(HeadlineContainer, "business", {
           title: "경제"
         }),
-        navigationOptions: navigationOptions("경제", "business")
+        navigationOptions: commonNavigationOptions("경제", "business")
       },
       General: {
         screen: CreateStackNavigation(HeadlineContainer, "general", {
           title: "종합"
         }),
-        navigationOptions: navigationOptions("일반", "apps")
+        navigationOptions: commonNavigationOptions("일반", "apps")
       },
       Science: {
         screen: CreateStackNavigation(HeadlineContainer, "science", {
           title: "과학"
         }),
-        navigationOptions: navigationOptions("과학", "flame")
+        navigationOptions: commonNavigationOptions("과학", "flame")
       },
       Technology: {
         screen: CreateStackNavigation(HeadlineContainer, "technology", {
           title: "기술"
         }),
-        navigationOptions: navigationOptions("기술", "build")
+        navigationOptions: commonNavigationOptions("기술", "build")
       },
       Sport: {
         screen: CreateStackNavigation(HeadlineContainer, "sport", {
           title: "스포츠"
         }),
-        navigationOptions: navigationOptions("스포츠", "football")
+        navigationOptions: commonNavigationOptions("스포츠", "football")
       },
       Entertainment: {
         screen: CreateStackNavigation(HeadlineContainer, "entertainment", {
           title: "연예"
         }),
-        navigationOptions: navigationOptions("연예", "tv")
+        navigationOptions: commonNavigationOptions("연예", "tv")
       }
     },
     {

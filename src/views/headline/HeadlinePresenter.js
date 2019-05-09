@@ -29,7 +29,13 @@ const newsList = ({ item, index, separators }) => {
   );
 };
 
-function HeadlinePresenter({ articles, navigation, moreData }) {
+function HeadlinePresenter({
+  articles,
+  navigation,
+  moreData,
+  refreshChecking,
+  refreshing
+}) {
   return (
     <Container>
       <HorizontalContainer
@@ -45,7 +51,12 @@ function HeadlinePresenter({ articles, navigation, moreData }) {
             onEndReached={() => {
               moreData();
             }}
-            onEndReachedThreshold={0}
+            refreshing={refreshing}
+            onRefresh={() => {
+              refreshChecking();
+            }}
+            keyExtractor={(item, index) => index.toString()}
+            onEndReachedThreshold={0.2}
           />
         </Section>
       </HorizontalContainer>
