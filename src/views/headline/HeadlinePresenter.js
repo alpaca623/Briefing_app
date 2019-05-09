@@ -18,6 +18,7 @@ const Section = styled.View`
 `;
 
 const newsList = ({ item, index, separators }) => {
+  console.log(separators);
   return (
     <NewsCard
       key={index}
