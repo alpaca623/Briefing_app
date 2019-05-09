@@ -9,7 +9,7 @@ const Container = styled.View``;
 
 const HorizontalContainer = styled.ScrollView``;
 
-const VerticalContainer = styled.FlatList``;
+// const VerticalContainer = styled.FlatList``;
 
 const Section = styled.View`
   /* background-color: yellow; */
@@ -29,17 +29,24 @@ const newsList = ({ item, index, separators }) => {
   );
 };
 
-function HeadlinePresenter({ articles, navigation }) {
+function HeadlinePresenter({ articles, navigation, moreData }) {
   return (
     <Container>
       <HorizontalContainer
         horizontal={true}
         pagingEnabled={true}
         scrollEventThrottle={1}
-        onScrollBeginDrag={() => navigation.navigate("general")}
+        // onScrollBeginDrag={() => navigation.navigate("general")}
       >
         <Section>
-          <FlatList data={articles} renderItem={newsList} />
+          <FlatList
+            data={articles}
+            renderItem={newsList}
+            onEndReached={() => {
+              moreData();
+            }}
+            onEndReachedThreshold={0}
+          />
         </Section>
       </HorizontalContainer>
     </Container>

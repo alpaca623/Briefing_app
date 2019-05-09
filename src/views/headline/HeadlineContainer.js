@@ -1,35 +1,36 @@
 import React from "react";
-import { AsyncStorage } from "react-native";
 import HeadlinePresenter from "./HeadlinePresenter";
 import { requestData } from "../../api/newsApi";
-import { extraData } from "../../sample/total";
 import Loader from "../../components/Loader";
+import { withNavigation } from "react-navigation";
 
 class HeadlineContainer extends React.Component {
   state = {
     loading: true,
     error: null,
-    articles: null
+    articles: [],
+    page: 1,
+    refreshing: false
   };
 
-  requestCategory = async category => {
+  getData = async () => {
     let articles, error;
+    console.log(this.state);
     try {
-      // ({ articles } = await extraData[category]);
-      ({data : {articles}} = await requestData.headline(category));
-      // ({
-      //   data: { articles }
-      // } = await JSON.stringify(requestData.headline(category)));
-
-      // AsyncStorage.setItem('articles', await requestData.headline(category)))
+      ({
+        data: { articles }
+      } = await requestData.headline(
+        this.props.navigation.state.routeName,
+        this.state.page
+      ));
     } catch (e) {
       // error = "error!! email send please. alpaca023@gmail.com";
-      console.log("error", e);
+      console.warn("error", e);
     } finally {
       this.setState({
         loading: false,
         error,
-        articles
+        articles: this.state.articles.concat(articles)
       });
     }
   };
@@ -40,7 +41,16 @@ class HeadlineContainer extends React.Component {
         state: { routeName }
       }
     } = this.props;
-    this.requestCategory(routeName);
+    this.getData(routeName);
+  };
+
+  requestMoreData = () => {
+    this.setState(
+      {
+        page: this.state.page + 1
+      },
+      this.getData
+    );
   };
 
   render() {
@@ -48,12 +58,9 @@ class HeadlineContainer extends React.Component {
     return loading ? (
       <Loader />
     ) : (
-      <HeadlinePresenter
-        articles={articles}
-        requestCategory={this.requestCategory}
-      />
+      <HeadlinePresenter articles={articles} moreData={this.requestMoreData} />
     );
   }
 }
 
-export default HeadlineContainer;
+export default withNavigation(HeadlineContainer);

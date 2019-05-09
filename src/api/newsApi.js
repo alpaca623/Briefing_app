@@ -15,7 +15,7 @@ export const requestData = {
     axios_instance("top-headlines").get("", {
       params: {
         category: category,
-        page: page ? "1" : page
+        page: page
       }
     })
 };
