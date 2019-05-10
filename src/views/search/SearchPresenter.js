@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { withNavigation } from "react-navigation";
+import SearchNewsCard from "../../components/SearchNewsCard";
 
 const Container = styled.View`
   height: 100%;
@@ -36,9 +37,19 @@ const SearchNoticeContainer = styled.View`
   justify-content: center;
 `;
 
+const SearchResultContainer = styled.ScrollView`
+  background-color: #f1f2f6;
+`;
+
 const SearchNoticeText = styled.Text``;
 
-function SearchPresenter({ navigation, searchText, searchStart, searchResult }) {
+function SearchPresenter({
+  navigation,
+  searchText,
+  searchStart,
+  searchResult,
+  searchFlag
+}) {
   console.log(searchResult);
   return (
     <Container>
@@ -47,12 +58,32 @@ function SearchPresenter({ navigation, searchText, searchStart, searchResult }) 
           returnKeyType={"search"}
           onChangeText={text => searchText(text)}
           onSubmitEditing={() => searchStart()}
+          clearButtonMode={"while-editing"}
         />
         <CancleBtn onPress={() => navigation.goBack()}>Cancel</CancleBtn>
       </Header>
-      <SearchNoticeContainer>
-        <SearchNoticeText>검색하세요!</SearchNoticeText>
-      </SearchNoticeContainer>
+      {searchFlag ? (
+        searchResult.length !== 0 ? (
+          <SearchResultContainer>
+            {searchResult.map((item, index) => (
+              <SearchNewsCard
+                key={index}
+                title={item.title}
+                uri={item.url}
+                description={item.description}
+              />
+            ))}
+          </SearchResultContainer>
+        ) : (
+          <SearchNoticeContainer>
+            <SearchNoticeText>검색결과가 없습니다</SearchNoticeText>
+          </SearchNoticeContainer>
+        )
+      ) : (
+        <SearchNoticeContainer>
+          <SearchNoticeText>검색하세요!</SearchNoticeText>
+        </SearchNoticeContainer>
+      )}
     </Container>
   );
 }

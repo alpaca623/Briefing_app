@@ -2,6 +2,7 @@ import React from "react";
 import SearchPresenter from "./SearchPresenter";
 
 import { requestData } from "../../api/newsApi";
+import Loader from "../../components/Loader";
 
 class SearchContainer extends React.Component {
   constructor(props) {
@@ -10,7 +11,8 @@ class SearchContainer extends React.Component {
     this.state = {
       loading: false,
       searchText: "",
-      articles: null
+      articles: null,
+      searchFlag: false
     };
   }
 
@@ -22,15 +24,13 @@ class SearchContainer extends React.Component {
 
   searchStart = async () => {
     const viewName = this.props.navigation.getParam("name");
-    let article, loading;
     try {
       this.setState({
         loading: true
-      })(
-        ({
-          data: { articles }
-        } = await requestData.headline(viewName, 1, this.state.searchText))
-      );
+      });
+      ({
+        data: { articles }
+      } = await requestData.headline(viewName, 1, this.state.searchText));
     } catch (e) {
       this.setState({
         error: e
@@ -38,7 +38,8 @@ class SearchContainer extends React.Component {
     } finally {
       this.setState({
         loading: false,
-        articles
+        articles,
+        searchFlag: true
       });
     }
   };
@@ -46,12 +47,13 @@ class SearchContainer extends React.Component {
   render() {
     const { loading, articles } = this.state;
     return loading ? (
-      <SearchPresenter />
+      <Loader />
     ) : (
       <SearchPresenter
         searchText={this.searchText}
         searchStart={this.searchStart}
         searchResult={articles}
+        searchFlag={this.state.searchFlag}
       />
     );
   }
