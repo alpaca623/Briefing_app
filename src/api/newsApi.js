@@ -11,11 +11,12 @@ const axios_instance = type =>
   });
 
 export const requestData = {
-  headline: (category, page) => {
+  headline: (category, page, query) => {
     return axios_instance("top-headlines").get("", {
       params: {
         category: category,
-        page: page
+        page: page,
+        q: query
       }
     });
   }

@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import { FlatList } from "react-native-gesture-handler";
 import { withNavigation } from "react-navigation";
 
 const Container = styled.View`
@@ -15,8 +14,6 @@ const Header = styled.View`
   align-items: center;
   border-bottom-width: 1px;
   border-bottom-color: #dcdde1;
-  /* justify-content:center; */
-  /* background-color: blue; */
 `;
 
 const SearchInput = styled.TextInput`
@@ -41,11 +38,16 @@ const SearchNoticeContainer = styled.View`
 
 const SearchNoticeText = styled.Text``;
 
-function SearchPresenter({ navigation }) {
+function SearchPresenter({ navigation, searchText, searchStart, searchResult }) {
+  console.log(searchResult);
   return (
     <Container>
       <Header>
-        <SearchInput />
+        <SearchInput
+          returnKeyType={"search"}
+          onChangeText={text => searchText(text)}
+          onSubmitEditing={() => searchStart()}
+        />
         <CancleBtn onPress={() => navigation.goBack()}>Cancel</CancleBtn>
       </Header>
       <SearchNoticeContainer>
