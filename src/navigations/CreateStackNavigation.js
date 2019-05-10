@@ -1,3 +1,4 @@
+import React from "react";
 import { createStackNavigator } from "react-navigation";
 import WebViewComponent from "../components/WebViewComponent";
 
@@ -5,7 +6,9 @@ const CreateStackNavigation = (screenObj, screenName, option) => {
   let navigationStack = {};
   navigationStack["" + screenName] = {
     screen: screenObj,
-    navigationOptions: option
+    navigationOptions: {
+      ...option
+    }
   };
 
   navigationStack["WebView"] = {

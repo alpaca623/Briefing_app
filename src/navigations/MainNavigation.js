@@ -1,20 +1,21 @@
 import React from "react";
-import { createAppContainer, createBottomTabNavigator } from "react-navigation";
+import { createAppContainer, createDrawerNavigator } from "react-navigation";
 import HeadlineContainer from "../views/headline";
 import CreateStackNavigation from "./CreateStackNavigation";
 import LoadIcon from "../components/LoadIcon";
 
 const commonNavigationOptions = (label, iconName) => {
   return {
-    tabBarLabel: label,
-    tabBarIcon: ({ tintColor }) => (
-      <LoadIcon name={iconName} type="ionicon" size={20} />
-    ),
+    drawerLabel: label
+    // tabBarLabel: label,
+    // tabBarIcon: ({ tintColor }) => (
+    //   <LoadIcon name={iconName} type="ionicon" size={20} />
+    // ),
   };
 };
 
 const MainNavigation = createAppContainer(
-  createBottomTabNavigator(
+  createDrawerNavigator(
     {
       Business: {
         screen: CreateStackNavigation(HeadlineContainer, "business", {
@@ -26,7 +27,7 @@ const MainNavigation = createAppContainer(
         screen: CreateStackNavigation(HeadlineContainer, "general", {
           title: "종합"
         }),
-        navigationOptions: commonNavigationOptions("일반", "apps")
+        navigationOptions: commonNavigationOptions("종합", "apps")
       },
       Science: {
         screen: CreateStackNavigation(HeadlineContainer, "science", {

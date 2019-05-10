@@ -4,7 +4,39 @@ import { requestData } from "../../api/newsApi";
 import Loader from "../../components/Loader";
 import { withNavigation } from "react-navigation";
 
+import styled from "styled-components";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import LoadIcon from "../../components/LoadIcon";
+
+const LeftContainer = styled.View`
+  padding-left: 15px;
+`;
+
+const RightContainer = styled.View`
+  padding-right: 15px;
+`;
+
+const HeaderText = styled.Text``;
+
 class HeadlineContainer extends React.Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerLeft: (
+        <TouchableWithoutFeedback onPress={() => navigation.openDrawer()}>
+          <LeftContainer>
+            <HeaderText>section</HeaderText>
+          </LeftContainer>
+        </TouchableWithoutFeedback>
+      ),
+      headerRight: (
+        <TouchableWithoutFeedback onPress={() => alert("search")}>
+          <RightContainer>
+            <LoadIcon name={"search"} type="ionicon" size={20} />
+          </RightContainer>
+        </TouchableWithoutFeedback>
+      )
+    };
+  };
   state = {
     loading: true,
     error: null,
