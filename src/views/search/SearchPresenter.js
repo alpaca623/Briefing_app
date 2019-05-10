@@ -2,15 +2,57 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { FlatList } from "react-native-gesture-handler";
+import { withNavigation } from "react-navigation";
 
-const Container = styled.View``;
+const Container = styled.View`
+  height: 100%;
+`;
 
-function SearchPresenter() {
+const Header = styled.View`
+  height: 7%;
+  margin-top: 40px;
+  flex-direction: row;
+  align-items: center;
+  border-bottom-width: 1px;
+  border-bottom-color: #dcdde1;
+  /* justify-content:center; */
+  /* background-color: blue; */
+`;
+
+const SearchInput = styled.TextInput`
+  width: 75%;
+  height: 30px;
+  margin-left: 20px;
+  background-color: #ecf0f1;
+  border-radius: 5px;
+`;
+
+const CancleBtn = styled.Text`
+  margin-left: 10px;
+  color: blue;
+`;
+
+const SearchNoticeContainer = styled.View`
+  height: 93%;
+  background-color: #f1f2f6;
+  align-items: center;
+  justify-content: center;
+`;
+
+const SearchNoticeText = styled.Text``;
+
+function SearchPresenter({ navigation }) {
   return (
     <Container>
-      <FlatList />
+      <Header>
+        <SearchInput />
+        <CancleBtn onPress={() => navigation.goBack()}>Cancel</CancleBtn>
+      </Header>
+      <SearchNoticeContainer>
+        <SearchNoticeText>검색하세요!</SearchNoticeText>
+      </SearchNoticeContainer>
     </Container>
   );
 }
 
-export default SearchPresenter;
+export default withNavigation(SearchPresenter);

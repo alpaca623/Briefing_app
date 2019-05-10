@@ -29,7 +29,7 @@ class HeadlineContainer extends React.Component {
         </TouchableWithoutFeedback>
       ),
       headerRight: (
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('Search')}>
+        <TouchableWithoutFeedback onPress={() => navigation.navigate("Search")}>
           <RightContainer>
             <LoadIcon name={"search"} type="ionicon" size={20} />
           </RightContainer>

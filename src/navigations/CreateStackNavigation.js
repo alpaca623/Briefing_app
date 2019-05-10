@@ -22,7 +22,8 @@ const CreateStackNavigation = (screenObj, screenName, option) => {
   navigationStack["Search"] = {
     screen: SearchContainer,
     navigationOptions: {
-      title: "검색"
+      title: "검색",
+      header: null,
     }
   };
   return createStackNavigator(navigationStack);
