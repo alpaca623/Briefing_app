@@ -3,6 +3,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { withNavigation } from "react-navigation";
 import SearchNewsCard from "../../components/SearchNewsCard";
+import { FlatList } from "react-native-gesture-handler";
 
 const Container = styled.View`
   height: 100%;
@@ -37,7 +38,7 @@ const SearchNoticeContainer = styled.View`
   justify-content: center;
 `;
 
-const SearchResultContainer = styled.ScrollView`
+const SearchResultContainer = styled.View`
   background-color: #f1f2f6;
 `;
 
@@ -48,9 +49,10 @@ function SearchPresenter({
   searchText,
   searchStart,
   searchResult,
-  searchFlag
+  searchFlag,
+  requestNextPage
 }) {
-  console.log(searchResult);
+  let onEndReachedCalledDuringMomentum;
   return (
     <Container>
       <Header>
@@ -64,16 +66,35 @@ function SearchPresenter({
       </Header>
       {searchFlag ? (
         searchResult.length !== 0 ? (
-          <SearchResultContainer>
-            {searchResult.map((item, index) => (
+          <FlatList
+            style={{ backgroundColor: "#f1f2f6" }}
+            data={searchResult}
+            renderItem={({ item }) => (
               <SearchNewsCard
-                key={index}
                 title={item.title}
                 uri={item.url}
                 description={item.description}
               />
-            ))}
-          </SearchResultContainer>
+            )}
+            // keyExtractor={(item, index) => index.toString()}
+            onEndReachedThreshold={0.2}
+            onEndReached={info => {
+              console.log('reached');
+              if (!onEndReachedCalledDuringMomentum) {
+                console.log(onEndReachedCalledDuringMomentum);
+                requestNextPage();
+                onEndReachedCalledDuringMomentum = true;
+              }
+            }}
+            onMomentumScrollBegin={() => {
+              console.log('start');
+              onEndReachedCalledDuringMomentum = false;
+            }}
+            onMomentumScrollEnd={() => {
+              console.log('end');
+              onEndReachedCalledDuringMomentum = true;
+            }}
+          />
         ) : (
           <SearchNoticeContainer>
             <SearchNoticeText>검색결과가 없습니다</SearchNoticeText>

@@ -36,6 +36,7 @@ function HeadlinePresenter({
   refreshChecking,
   refreshing
 }) {
+  let onEndReachedCalledDuringMomentum;
   return (
     <Container>
       <HorizontalContainer
@@ -54,9 +55,14 @@ function HeadlinePresenter({
             }}
             keyExtractor={(item, index) => index.toString()}
             onEndReachedThreshold={0.2}
-            onEndReached={(info) => {
-              moreData();
-              // console.log(info);
+            onEndReached={info => {
+              if(!onEndReachedCalledDuringMomentum){
+                moreData();
+                onEndReachedCalledDuringMomentum = true;
+              }
+            }}
+            onMomentumScrollBegin={() => {
+              onEndReachedCalledDuringMomentum = false;
             }}
           />
         </Section>

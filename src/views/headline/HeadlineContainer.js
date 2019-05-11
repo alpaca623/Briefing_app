@@ -60,7 +60,11 @@ class HeadlineContainer extends React.Component {
     try {
       ({
         data: { articles }
-      } = await requestData.headline(routeName, refreshing ? "1" : page));
+      } = await requestData.headline(
+        routeName,
+        refreshing ? "1" : page,
+        "7"
+      ));
     } catch (e) {
       // error = "error!! email send please. alpaca023@gmail.com";
       console.warn("error", e);
