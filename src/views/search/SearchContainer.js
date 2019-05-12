@@ -78,7 +78,6 @@ class SearchContainer extends React.Component {
 
   render() {
     const { loading, articles, totalResults } = this.state;
-    console.log(articles);
     return loading ? (
       <Loader />
     ) : (
