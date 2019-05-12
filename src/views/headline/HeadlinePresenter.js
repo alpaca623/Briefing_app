@@ -36,7 +36,7 @@ function HeadlinePresenter({
   refreshChecking,
   refreshing
 }) {
-  let onEndReachedCalledDuringMomentum;
+  let onEndReachedCalledDuringMomentum = true;
   return (
     <Container>
       <HorizontalContainer

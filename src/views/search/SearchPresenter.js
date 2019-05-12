@@ -42,6 +42,20 @@ const SearchResultContainer = styled.View`
   background-color: #f1f2f6;
 `;
 
+const SearchListHeader = styled.View`
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  background-color:white;
+  border-bottom-width:1px;
+  border-bottom-color: #bdc3c7;
+`;
+
+const SearchListResult = styled.Text`
+  font-size:17px;
+  font-weight:500;
+`;
+
 const SearchNoticeText = styled.Text``;
 
 function SearchPresenter({
@@ -50,9 +64,10 @@ function SearchPresenter({
   searchStart,
   searchResult,
   searchFlag,
-  requestNextPage
+  requestNextPage,
+  totalResults
 }) {
-  let onEndReachedCalledDuringMomentum;
+  let onEndReachedCalledDuringMomentum = true;
   return (
     <Container>
       <Header>
@@ -64,47 +79,49 @@ function SearchPresenter({
         />
         <CancleBtn onPress={() => navigation.goBack()}>Cancel</CancleBtn>
       </Header>
-      {searchFlag ? (
-        searchResult.length !== 0 ? (
-          <FlatList
-            style={{ backgroundColor: "#f1f2f6" }}
-            data={searchResult}
-            renderItem={({ item }) => (
-              <SearchNewsCard
-                title={item.title}
-                uri={item.url}
-                description={item.description}
+      <SearchResultContainer>
+        {searchFlag ? (
+          searchResult.length !== 0 ? (
+            <React.Fragment>
+              <SearchListHeader>
+                <SearchListResult>검색결과 총 {totalResults} 개</SearchListResult>
+              </SearchListHeader>
+              <FlatList
+                style={{ backgroundColor: "#f1f2f6" }}
+                data={searchResult}
+                renderItem={({ item }) => (
+                  <SearchNewsCard
+                    title={item.title}
+                    uri={item.url}
+                    urlToImage={item.urlToImage}
+                    description={item.description}
+                  />
+                )}
+                keyExtractor={(item, index) => index.toString()}
+                // keyExtractor={(item, index) => index.toString()}
+                onEndReachedThreshold={0.2}
+                onEndReached={info => {
+                  if (!onEndReachedCalledDuringMomentum) {
+                    requestNextPage();
+                    onEndReachedCalledDuringMomentum = true;
+                  }
+                }}
+                onMomentumScrollBegin={() => {
+                  onEndReachedCalledDuringMomentum = false;
+                }}
               />
-            )}
-            // keyExtractor={(item, index) => index.toString()}
-            onEndReachedThreshold={0.2}
-            onEndReached={info => {
-              console.log('reached');
-              if (!onEndReachedCalledDuringMomentum) {
-                console.log(onEndReachedCalledDuringMomentum);
-                requestNextPage();
-                onEndReachedCalledDuringMomentum = true;
-              }
-            }}
-            onMomentumScrollBegin={() => {
-              console.log('start');
-              onEndReachedCalledDuringMomentum = false;
-            }}
-            onMomentumScrollEnd={() => {
-              console.log('end');
-              onEndReachedCalledDuringMomentum = true;
-            }}
-          />
+            </React.Fragment>
+          ) : (
+            <SearchNoticeContainer>
+              <SearchNoticeText>검색결과가 없습니다</SearchNoticeText>
+            </SearchNoticeContainer>
+          )
         ) : (
           <SearchNoticeContainer>
-            <SearchNoticeText>검색결과가 없습니다</SearchNoticeText>
+            <SearchNoticeText>검색하세요!</SearchNoticeText>
           </SearchNoticeContainer>
-        )
-      ) : (
-        <SearchNoticeContainer>
-          <SearchNoticeText>검색하세요!</SearchNoticeText>
-        </SearchNoticeContainer>
-      )}
+        )}
+      </SearchResultContainer>
     </Container>
   );
 }

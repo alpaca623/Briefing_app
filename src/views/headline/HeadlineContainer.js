@@ -16,7 +16,9 @@ const RightContainer = styled.View`
   padding-right: 15px;
 `;
 
-const HeaderText = styled.Text``;
+const HeaderText = styled.Text`
+  color: blue;
+`;
 
 class HeadlineContainer extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -60,11 +62,7 @@ class HeadlineContainer extends React.Component {
     try {
       ({
         data: { articles }
-      } = await requestData.headline(
-        routeName,
-        refreshing ? "1" : page,
-        "7"
-      ));
+      } = await requestData.headline(refreshing ? "1" : page, "7", null, routeName));
     } catch (e) {
       // error = "error!! email send please. alpaca023@gmail.com";
       console.warn("error", e);

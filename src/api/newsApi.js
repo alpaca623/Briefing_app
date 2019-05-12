@@ -10,8 +10,7 @@ const axios_instance = type =>
   });
 
 export const requestData = {
-  headline: (category, page, pageSize, query) => {
-    console.log(page, pageSize);
+  headline: (page, pageSize, query, category) => {
     return axios_instance("top-headlines").get("", {
       params: {
         category: category,

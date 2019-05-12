@@ -14,7 +14,7 @@ class SearchContainer extends React.Component {
       articles: [],
       searchFlag: false,
       page: 1,
-      pageSize: 20,
+      pageSize: 15,
       onEndReached: false,
       totalResults: 0
     };
@@ -31,14 +31,15 @@ class SearchContainer extends React.Component {
     let { articles, error, totalResults } = this.state;
     try {
       ({
-        data: { articles },
-        totalResults
+        data
       } = await requestData.headline(
-        viewName,
         this.state.page,
         this.state.pageSize,
         this.state.searchText
       ));
+      // 임시 방편으로..
+      articles = data.articles;
+      totalResults = data.totalResults;
     } catch (e) {
       this.setState({
         error: e
@@ -76,7 +77,7 @@ class SearchContainer extends React.Component {
   };
 
   render() {
-    const { loading, articles } = this.state;
+    const { loading, articles, totalResults } = this.state;
     console.log(articles);
     return loading ? (
       <Loader />
@@ -84,9 +85,10 @@ class SearchContainer extends React.Component {
       <SearchPresenter
         searchText={this.searchText}
         searchStart={this.searchStart}
-        searchResult={articles}
         searchFlag={this.state.searchFlag}
         requestNextPage={this.requestNextPage}
+        totalResults={totalResults}
+        searchResult={articles}
       />
     );
   }
