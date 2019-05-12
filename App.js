@@ -8,9 +8,8 @@
 
 import React, { Component } from "react";
 
-import styled from 'styled-components';
 import MainNavigation from "./src/navigations/MainNavigation";
-// import WebView from 'react-native-webview';
+import './src/util/initFunction';
 
 export default class App extends Component {
   render() {

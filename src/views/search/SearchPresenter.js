@@ -94,6 +94,7 @@ function SearchPresenter({
                     title={item.title}
                     uri={item.url}
                     urlToImage={item.urlToImage}
+                    publishedAt={item.publishedAt}
                     description={item.description}
                   />
                 )}
