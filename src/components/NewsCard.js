@@ -8,6 +8,8 @@ import { reduceDescription } from "../util/StringUtil";
 import NewsImage from "./NewsImage";
 import { NavigationActions, withNavigation } from "react-navigation";
 
+import { convertDate } from "../util/StringUtil";
+
 const Container = styled.View`
   /* border: 1px solid black; */
   background-color: white;
@@ -30,6 +32,8 @@ const DescriptionCover = styled.View`
 
 const DateBoxCover = styled.View`
   justify-content: center;
+  margin-left:17px;
+  margin-bottom:10px;
 `;
 
 const Title = styled.Text`
@@ -39,9 +43,18 @@ const Title = styled.Text`
 const Desciption = styled.Text`
   font-size: 13px;
 `;
-const DateBox = styled.Text``;
+const DateBox = styled.Text`
+  color:#636e72;
+`;
 
-const NewsCard = ({ title, urlToImage, description, uri, navigation }) => (
+const NewsCard = ({
+  title,
+  urlToImage,
+  description,
+  uri,
+  publishedAt,
+  navigation
+}) => (
   <TouchableWithoutFeedback
     onPress={() => navigation.navigate("WebView", { uri: uri })}
   >
@@ -53,6 +66,9 @@ const NewsCard = ({ title, urlToImage, description, uri, navigation }) => (
       <DescriptionCover>
         <Desciption>{reduceDescription(description, 100, 100)}</Desciption>
       </DescriptionCover>
+      <DateBoxCover>
+        <DateBox>{convertDate(publishedAt)}</DateBox>
+      </DateBoxCover>
     </Container>
   </TouchableWithoutFeedback>
 );

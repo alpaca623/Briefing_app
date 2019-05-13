@@ -24,6 +24,7 @@ const newsList = ({ item, index, separators }) => {
       title={item.title}
       uri={item.url}
       description={item.description}
+      publishedAt={item.publishedAt}
       urlToImage={item.urlToImage}
     />
   );
