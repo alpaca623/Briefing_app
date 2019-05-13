@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { withNavigation } from "react-navigation";
 import SearchNewsCard from "../../components/SearchNewsCard";
 import { FlatList } from "react-native-gesture-handler";
+import Loader from "../../components/Loader";
 
 const Container = styled.View`
   height: 100%;
@@ -39,6 +40,7 @@ const SearchNoticeContainer = styled.View`
 `;
 
 const SearchResultContainer = styled.View`
+  height: 88%;
   background-color: #f1f2f6;
 `;
 
@@ -46,14 +48,14 @@ const SearchListHeader = styled.View`
   height: 30px;
   align-items: center;
   justify-content: center;
-  background-color:white;
-  border-bottom-width:1px;
+  background-color: white;
+  border-bottom-width: 1px;
   border-bottom-color: #bdc3c7;
 `;
 
 const SearchListResult = styled.Text`
-  font-size:17px;
-  font-weight:500;
+  font-size: 17px;
+  font-weight: 500;
 `;
 
 const SearchNoticeText = styled.Text``;
@@ -65,7 +67,8 @@ function SearchPresenter({
   searchResult,
   searchFlag,
   requestNextPage,
-  totalResults
+  totalResults,
+  loading
 }) {
   let onEndReachedCalledDuringMomentum = true;
   return (
@@ -79,50 +82,56 @@ function SearchPresenter({
         />
         <CancleBtn onPress={() => navigation.goBack()}>Cancel</CancleBtn>
       </Header>
-      <SearchResultContainer>
-        {searchFlag ? (
-          searchResult.length !== 0 ? (
-            <React.Fragment>
-              <SearchListHeader>
-                <SearchListResult>검색결과 총 {totalResults} 개</SearchListResult>
-              </SearchListHeader>
-              <FlatList
-                style={{ backgroundColor: "#f1f2f6" }}
-                data={searchResult}
-                renderItem={({ item }) => (
-                  <SearchNewsCard
-                    title={item.title}
-                    uri={item.url}
-                    urlToImage={item.urlToImage}
-                    publishedAt={item.publishedAt}
-                    description={item.description}
-                  />
-                )}
-                keyExtractor={(item, index) => index.toString()}
-                // keyExtractor={(item, index) => index.toString()}
-                onEndReachedThreshold={0.2}
-                onEndReached={info => {
-                  if (!onEndReachedCalledDuringMomentum) {
-                    requestNextPage();
-                    onEndReachedCalledDuringMomentum = true;
-                  }
-                }}
-                onMomentumScrollBegin={() => {
-                  onEndReachedCalledDuringMomentum = false;
-                }}
-              />
-            </React.Fragment>
+      {loading ? (
+        <Loader />
+      ) : (
+        <SearchResultContainer>
+          {searchFlag ? (
+            searchResult.length !== 0 ? (
+              <React.Fragment>
+                <SearchListHeader>
+                  <SearchListResult>
+                    검색결과 총 {totalResults} 개
+                  </SearchListResult>
+                </SearchListHeader>
+                <FlatList
+                  style={{ backgroundColor: "#f1f2f6" }}
+                  data={searchResult}
+                  renderItem={({ item }) => (
+                    <SearchNewsCard
+                      title={item.title}
+                      uri={item.url}
+                      urlToImage={item.urlToImage}
+                      publishedAt={item.publishedAt}
+                      description={item.description}
+                    />
+                  )}
+                  keyExtractor={(item, index) => index.toString()}
+                  // keyExtractor={(item, index) => index.toString()}
+                  onEndReachedThreshold={0.2}
+                  onEndReached={info => {
+                    if (!onEndReachedCalledDuringMomentum) {
+                      requestNextPage();
+                      onEndReachedCalledDuringMomentum = true;
+                    }
+                  }}
+                  onMomentumScrollBegin={() => {
+                    onEndReachedCalledDuringMomentum = false;
+                  }}
+                />
+              </React.Fragment>
+            ) : (
+              <SearchNoticeContainer>
+                <SearchNoticeText>검색결과가 없습니다</SearchNoticeText>
+              </SearchNoticeContainer>
+            )
           ) : (
             <SearchNoticeContainer>
-              <SearchNoticeText>검색결과가 없습니다</SearchNoticeText>
+              <SearchNoticeText>검색하세요!</SearchNoticeText>
             </SearchNoticeContainer>
-          )
-        ) : (
-          <SearchNoticeContainer>
-            <SearchNoticeText>검색하세요!</SearchNoticeText>
-          </SearchNoticeContainer>
-        )}
-      </SearchResultContainer>
+          )}
+        </SearchResultContainer>
+      )}
     </Container>
   );
 }

@@ -35,7 +35,7 @@ function HeadlinePresenter({
   navigation,
   moreData,
   refreshChecking,
-  refreshing
+  refreshing,
 }) {
   let onEndReachedCalledDuringMomentum = true;
   return (

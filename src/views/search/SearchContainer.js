@@ -2,7 +2,6 @@ import React from "react";
 import SearchPresenter from "./SearchPresenter";
 
 import { requestData } from "../../api/newsApi";
-import Loader from "../../components/Loader";
 
 class SearchContainer extends React.Component {
   constructor(props) {
@@ -27,12 +26,10 @@ class SearchContainer extends React.Component {
   };
 
   getData = async () => {
-    const viewName = this.props.navigation.getParam("name");
+    // const viewName = this.props.navigation.getParam("name");
     let { articles, error, totalResults } = this.state;
     try {
-      ({
-        data
-      } = await requestData.headline(
+      ({ data } = await requestData.headline(
         this.state.page,
         this.state.pageSize,
         this.state.searchText
@@ -78,9 +75,7 @@ class SearchContainer extends React.Component {
 
   render() {
     const { loading, articles, totalResults } = this.state;
-    return loading ? (
-      <Loader />
-    ) : (
+    return (
       <SearchPresenter
         searchText={this.searchText}
         searchStart={this.searchStart}
@@ -88,6 +83,7 @@ class SearchContainer extends React.Component {
         requestNextPage={this.requestNextPage}
         totalResults={totalResults}
         searchResult={articles}
+        loading={loading}
       />
     );
   }
