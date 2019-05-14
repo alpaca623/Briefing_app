@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { FlatList } from "react-native";
+
 import styled from "styled-components";
 import { width, height } from "../../constants/Screen";
-import NewsCard from "../../components/NewsCard";
 import { withNavigation } from "react-navigation";
+import HeadlineComponent from "../../components/HeadlineComponent";
 
 const Container = styled.View``;
 
@@ -17,54 +17,34 @@ const Section = styled.View`
   /* height: ${height}px; */
 `;
 
-const newsList = ({ item, index, separators }) => {
-  return (
-    <NewsCard
-      key={index}
-      title={item.title}
-      uri={item.url}
-      description={item.description}
-      publishedAt={item.publishedAt}
-      urlToImage={item.urlToImage}
-    />
-  );
-};
+const Sample = styled.Text``;
 
 function HeadlinePresenter({
   articles,
-  navigation,
   moreData,
   refreshChecking,
   refreshing,
+  slideViewName,
+  navigation
 }) {
-  let onEndReachedCalledDuringMomentum = true;
   return (
     <Container>
       <HorizontalContainer
         horizontal={true}
         pagingEnabled={true}
+        onMomentumScrollBegin={e => {
+          e.persist();
+          console.log(e);
+        }}
         scrollEventThrottle={1}
         // onScrollBeginDrag={() => navigation.navigate("general")}
       >
-        <Section>
-          <FlatList
-            data={articles}
-            renderItem={newsList}
+        <Section name="business">
+          <HeadlineComponent
+            refreshChecking={refreshChecking}
             refreshing={refreshing}
-            onRefresh={() => {
-              refreshChecking();
-            }}
-            keyExtractor={(item, index) => index.toString()}
-            onEndReachedThreshold={0.2}
-            onEndReached={info => {
-              if(!onEndReachedCalledDuringMomentum){
-                moreData();
-                onEndReachedCalledDuringMomentum = true;
-              }
-            }}
-            onMomentumScrollBegin={() => {
-              onEndReachedCalledDuringMomentum = false;
-            }}
+            moreData={moreData}
+            articles={articles}
           />
         </Section>
       </HorizontalContainer>

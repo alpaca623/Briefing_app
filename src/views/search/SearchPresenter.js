@@ -5,6 +5,7 @@ import { withNavigation } from "react-navigation";
 import SearchNewsCard from "../../components/SearchNewsCard";
 import { FlatList } from "react-native-gesture-handler";
 import Loader from "../../components/Loader";
+import LoadIcon from "../../components/LoadIcon";
 
 const Container = styled.View`
   height: 100%;
@@ -58,7 +59,13 @@ const SearchListResult = styled.Text`
   font-weight: 500;
 `;
 
-const SearchNoticeText = styled.Text``;
+const SearchIcon = styled.View``;
+
+const SearchNoticeText = styled.Text`
+  font-size:${props => props.size ? props.size : 13}px;
+  margin-bottom:5px;
+`;
+
 
 function SearchPresenter({
   navigation,
@@ -108,7 +115,7 @@ function SearchPresenter({
                   )}
                   keyExtractor={(item, index) => index.toString()}
                   // keyExtractor={(item, index) => index.toString()}
-                  onEndReachedThreshold={0.2}
+                  onEndReachedThreshold={0.4}
                   onEndReached={info => {
                     if (!onEndReachedCalledDuringMomentum) {
                       requestNextPage();
@@ -127,7 +134,12 @@ function SearchPresenter({
             )
           ) : (
             <SearchNoticeContainer>
-              <SearchNoticeText>검색하세요!</SearchNoticeText>
+              <SearchIcon>
+                <LoadIcon name="search" size={50} type="ionicon"/>
+              </SearchIcon>
+              <SearchNoticeText size={25}>검색하세요!</SearchNoticeText>
+              <SearchNoticeText>경제, 종합, 과학, 기술, 스포츠, 연예</SearchNoticeText>
+              <SearchNoticeText>분야의 내용을 검색하실 수 있습니다</SearchNoticeText>
             </SearchNoticeContainer>
           )}
         </SearchResultContainer>

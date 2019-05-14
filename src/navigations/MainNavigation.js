@@ -55,46 +55,7 @@ const MainNavigation = createAppContainer(
       }
     },
     {
-      // drawerType: "front",
-      // defaultNavigationOptions: ({ navigation }) => ({
-      //   tabBarIcon: () => {
-      //     let icon = "";
-      //     const {
-      //       state: { routeName }
-      //     } = navigation;
-      //     switch (routeName) {
-      //       case "Business":
-      //         icon = `business`;
-      //         break;
-      //       case "General":
-      //         icon = `clipboard`;
-      //         break;
-      //       case "Science":
-      //         icon = "magnet";
-      //         break;
-      //       case "Technology":
-      //         icon = "book";
-      //         break;
-      //       case "Sport":
-      //         icon = "basketball";
-      //         break;
-      //       case "Entertainment":
-      //         icon = "cafe";
-      //         break;
-      //     }
-      //     return LoadIcon(
-      //       `${Platform === "ios" ? "ios" : "md"}-${icon}`,
-      //       12,
-      //       "black",
-      //       navigation,
-      //       routeName
-      //     );
-      //   }
-      // }),
       initialRouteName: "Business",
-      tabBarOptions: {
-        // showIcon: true
-      }
     }
   )
 );
