@@ -68,7 +68,25 @@ const MainNavigation = createAppContainer(
       }
     },
     {
-      contentComponent: (props) => <CustomDrawerContentComponent props={props}/>,
+      contentComponent: props => <CustomDrawerContentComponent props={props} />,
+      contentOptions: {
+        labelStyle: {
+          fontWeight: "600"
+        },
+        itemStyle: {
+          borderBottomWidth: 1,
+          borderColor: "#ced6e0"
+        },
+        itemsContainerStyle: {
+          paddingVertical: 0,
+          // backgroundColor:"red",
+        },
+        activeBackgroundColor:"#dcdde1",
+        activeTintColor:"black",
+        // activeLabelStyle:{
+        //   fontWeight:"900"
+        // }
+      },
       // drawerType: "front",
       // defaultNavigationOptions: ({ navigation }) => ({
       //   tabBarIcon: () => {

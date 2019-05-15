@@ -26,7 +26,8 @@ class HeadlineContainer extends React.Component {
       headerLeft: (
         <TouchableWithoutFeedback onPress={() => navigation.openDrawer()}>
           <LeftContainer>
-            <HeaderText>section</HeaderText>
+            {/* <HeaderText>section</HeaderText> */}
+            <LoadIcon name={"menu"} type="ionicon" size={20} />
           </LeftContainer>
         </TouchableWithoutFeedback>
       ),
