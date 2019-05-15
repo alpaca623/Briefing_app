@@ -11,13 +11,14 @@ const axios_instance = type =>
 
 export const requestData = {
   headline: (page, pageSize, query, category) => {
-    return axios_instance("top-headlines").get("", {
-      params: {
-        category: category,
-        page: page,
-        q: query,
-        pageSize: pageSize
-      }
-    });
+    const params = {
+      page: page,
+      q: query,
+      pageSize: pageSize
+    };
+    if (params.category !== "") {
+      params["category"] = category;
+    }
+    return axios_instance("top-headlines").get("", params);
   }
 };

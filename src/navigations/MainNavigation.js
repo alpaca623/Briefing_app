@@ -1,8 +1,15 @@
 import React from "react";
-import { createAppContainer, createDrawerNavigator } from "react-navigation";
+import {
+  createAppContainer,
+  createDrawerNavigator,
+  DrawerItems,
+  SafeAreaView
+} from "react-navigation";
 import HeadlineContainer from "../views/headline";
 import CreateStackNavigation from "./CreateStackNavigation";
 import LoadIcon from "../components/LoadIcon";
+
+import CustomDrawerContentComponent from "../components/CustomDrawerComponent";
 
 const commonNavigationOptions = (label, iconName) => {
   return {
@@ -17,6 +24,12 @@ const commonNavigationOptions = (label, iconName) => {
 const MainNavigation = createAppContainer(
   createDrawerNavigator(
     {
+      All: {
+        screen: CreateStackNavigation(HeadlineContainer, "All", {
+          title: "최신기사"
+        }),
+        navigationOptions: commonNavigationOptions("최신기사", "")
+      },
       Business: {
         screen: CreateStackNavigation(HeadlineContainer, "business", {
           title: "경제"
@@ -55,6 +68,7 @@ const MainNavigation = createAppContainer(
       }
     },
     {
+      contentComponent: (props) => <CustomDrawerContentComponent props={props}/>,
       // drawerType: "front",
       // defaultNavigationOptions: ({ navigation }) => ({
       //   tabBarIcon: () => {
@@ -91,7 +105,7 @@ const MainNavigation = createAppContainer(
       //     );
       //   }
       // }),
-      initialRouteName: "Business",
+      initialRouteName: "All",
       tabBarOptions: {
         // showIcon: true
       }
