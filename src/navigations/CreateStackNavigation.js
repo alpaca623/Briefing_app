@@ -13,10 +13,7 @@ const CreateStackNavigation = (screenObj, screenName, option) => {
   };
 
   navigationStack["WebView"] = {
-    screen: WebViewComponent,
-    navigationOptions: {
-      title: "Open WebView"
-    }
+    screen: WebViewComponent
   };
 
   navigationStack["Search"] = {

@@ -32,10 +32,9 @@ const newsList = ({ item, index, separators }) => {
 
 function HeadlinePresenter({
   articles,
-  navigation,
   moreData,
   refreshChecking,
-  refreshing,
+  refreshing
 }) {
   let onEndReachedCalledDuringMomentum = true;
   return (
@@ -57,7 +56,7 @@ function HeadlinePresenter({
             keyExtractor={(item, index) => index.toString()}
             onEndReachedThreshold={0.2}
             onEndReached={info => {
-              if(!onEndReachedCalledDuringMomentum){
+              if (!onEndReachedCalledDuringMomentum) {
                 moreData();
                 onEndReachedCalledDuringMomentum = true;
               }
@@ -72,4 +71,4 @@ function HeadlinePresenter({
   );
 }
 
-export default withNavigation(HeadlinePresenter);
+export default HeadlinePresenter;

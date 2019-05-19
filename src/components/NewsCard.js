@@ -32,8 +32,8 @@ const DescriptionCover = styled.View`
 
 const DateBoxCover = styled.View`
   justify-content: center;
-  margin-left:17px;
-  margin-bottom:10px;
+  margin-left: 17px;
+  margin-bottom: 10px;
 `;
 
 const Title = styled.Text`
@@ -44,7 +44,7 @@ const Desciption = styled.Text`
   font-size: 13px;
 `;
 const DateBox = styled.Text`
-  color:#636e72;
+  color: #636e72;
 `;
 
 const NewsCard = ({
@@ -56,7 +56,7 @@ const NewsCard = ({
   navigation
 }) => (
   <TouchableWithoutFeedback
-    onPress={() => navigation.navigate("WebView", { uri: uri })}
+    onPress={() => navigation.navigate("WebView", { uri: uri, title: title })}
   >
     <Container>
       <NewsImage urlToImage={urlToImage} />

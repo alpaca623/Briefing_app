@@ -1,13 +1,7 @@
 import React from "react";
-import {
-  createAppContainer,
-  createDrawerNavigator,
-  DrawerItems,
-  SafeAreaView
-} from "react-navigation";
+import { createAppContainer, createDrawerNavigator } from "react-navigation";
 import HeadlineContainer from "../views/headline";
 import CreateStackNavigation from "./CreateStackNavigation";
-import LoadIcon from "../components/LoadIcon";
 
 import CustomDrawerContentComponent from "../components/CustomDrawerComponent";
 
@@ -78,11 +72,11 @@ const MainNavigation = createAppContainer(
           borderColor: "#ced6e0"
         },
         itemsContainerStyle: {
-          paddingVertical: 0,
+          paddingVertical: 0
           // backgroundColor:"red",
         },
-        activeBackgroundColor:"#dcdde1",
-        activeTintColor:"black",
+        activeBackgroundColor: "#dcdde1",
+        activeTintColor: "black"
         // activeLabelStyle:{
         //   fontWeight:"900"
         // }

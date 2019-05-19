@@ -101,6 +101,7 @@ class HeadlineContainer extends React.Component {
 
   render() {
     const { articles, loading } = this.state;
+    console.log(articles);
     return loading ? (
       <Loader />
     ) : (
