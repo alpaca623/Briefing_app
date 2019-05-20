@@ -19,12 +19,14 @@ class SearchContainer extends React.Component {
     };
   }
 
+  // 검색창 입력 처리
   searchText = text => {
     this.setState({
       searchText: text
     });
   };
 
+  // 검색어 기반 검색 요청
   getData = async () => {
     // const viewName = this.props.navigation.getParam("name");
     let { articles, error, totalResults } = this.state;
@@ -63,6 +65,7 @@ class SearchContainer extends React.Component {
     );
   };
 
+  // 페이지 위로 당길때 데이터 추가 요청
   requestNextPage = () => {
     this.setState(
       {
