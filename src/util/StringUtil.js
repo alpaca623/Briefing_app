@@ -9,7 +9,7 @@ export const convertDate = publishedAt => {
   const standardTime = new Date(publishedAt);
   const year = standardTime.getFullYear();
   const month = standardTime.getMonth() + 1;
-  const day = standardTime.getDay();
+  const day = standardTime.getDate();
 
   const hour = standardTime.getHours();
   const minute = standardTime.getMinutes();
