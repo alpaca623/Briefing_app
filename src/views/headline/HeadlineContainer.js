@@ -9,11 +9,12 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import LoadIcon from "../../components/LoadIcon";
 
 const LeftContainer = styled.View`
-  padding-left: 15px;
+  /* padding-left: 5px; */
+  margin: 10px 15px 10px 24px;
 `;
 
 const RightContainer = styled.View`
-  padding-right: 15px;
+  margin: 10px 24px 10px 15px;
 `;
 
 const HeaderText = styled.Text`
@@ -27,7 +28,7 @@ class HeadlineContainer extends React.Component {
         <TouchableWithoutFeedback onPress={() => navigation.openDrawer()}>
           <LeftContainer>
             {/* <HeaderText>section</HeaderText> */}
-            <LoadIcon name={"menu"} type="ionicon" size={20} />
+            <LoadIcon name={"menu"} type="ionicon" size={24} />
           </LeftContainer>
         </TouchableWithoutFeedback>
       ),
@@ -44,12 +45,16 @@ class HeadlineContainer extends React.Component {
       )
     };
   };
+  constructor(props) {
+    super(props);
+  }
   state = {
     loading: true,
     error: null,
     articles: [],
     page: 1,
-    refreshing: false
+    refreshing: false,
+    menuChange: false
   };
 
   getData = async () => {
@@ -63,7 +68,12 @@ class HeadlineContainer extends React.Component {
     try {
       ({
         data: { articles }
-      } = await requestData.headline(refreshing ? "1" : page, "7", null, routeName));
+      } = await requestData.headline(
+        refreshing ? "1" : page,
+        "7",
+        null,
+        routeName
+      ));
     } catch (e) {
       // error = "error!! email send please. alpaca023@gmail.com";
       console.warn("error", e);
@@ -72,13 +82,25 @@ class HeadlineContainer extends React.Component {
         loading: false,
         refreshing: false,
         error,
-        articles: refreshing ? articles : this.state.articles.concat(articles)
+        articles: refreshing ? articles : this.state.articles.concat(articles),
+        menuChange: false
       });
     }
   };
 
+  // shouldComponentUpdate = () => {
+  //   // this.getData();
+  //   return false;
+  // };
+
+  static getDerivedStateFromProps = (props, state) => {
+    console.log(props);
+    console.log(state);
+    return null;
+  };
+
   componentDidMount = () => {
-    this.state.refreshing ? "" : this.getData();
+    this.getData();
   };
 
   requestMoreData = () => {
@@ -101,7 +123,6 @@ class HeadlineContainer extends React.Component {
 
   render() {
     const { articles, loading } = this.state;
-    console.log(articles);
     return loading ? (
       <Loader />
     ) : (

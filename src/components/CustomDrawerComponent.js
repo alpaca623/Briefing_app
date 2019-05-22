@@ -1,12 +1,14 @@
 import React from "react";
 import { DrawerItems, SafeAreaView } from "react-navigation";
 
-import {height} from '../constants/Screen';
+import { NavigationActions } from "react-navigation";
+
+import { height } from "../constants/Screen";
 
 import styled from "styled-components";
 
 const Container = styled.View`
-  height:${height};
+  height: ${height};
 `;
 
 const ScrollDrawer = styled.ScrollView``;
@@ -21,6 +23,12 @@ const HeaderHead = styled.View`
   /* margin-bottom: 10px; */
 `;
 
+const HeaderText = styled.Text`
+  font-weight: ${props => props.weight};
+  font-size: ${props => props.size}px;
+  color: ${props => props.color};
+`;
+
 const HeaderContent = styled.View`
   justify-content: flex-end;
   align-items: flex-start;
@@ -29,19 +37,14 @@ const HeaderContent = styled.View`
   padding-left: 13px;
   padding-bottom: 5px;
 
-  border-top-width:1px;
-  border-top-color:#ced6e0;
-  border-bottom-color:#ced6e0;
-  border-bottom-width:1px;
-`;
-
-const HeaderText = styled.Text`
-  font-weight: ${props => props.weight};
-  font-size: ${props => props.size}px;
-  color: ${props => props.color};
+  border-top-width: 1px;
+  border-top-color: #ced6e0;
+  border-bottom-color: #ced6e0;
+  border-bottom-width: 1px;
 `;
 
 const CustomDrawerContentComponent = ({ props }) => {
+  const { navigation } = props;
   return (
     <Container>
       <ScrollDrawer>
@@ -61,7 +64,14 @@ const CustomDrawerContentComponent = ({ props }) => {
               </HeaderText>
             </HeaderContent>
           </DrawerHeaderContainer>
-          <DrawerItems {...props} />
+          <DrawerItems
+            {...props}
+            onItemPress={({ route }) => {
+              navigation.navigate(route.routeName.toLowerCase(), {
+                menuChange: true
+              });
+            }}
+          />
         </SafeAreaView>
       </ScrollDrawer>
     </Container>

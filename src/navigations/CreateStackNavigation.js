@@ -1,5 +1,5 @@
 import React from "react";
-import { createStackNavigator } from "react-navigation";
+import { createStackNavigator, withNavigation } from "react-navigation";
 import WebViewComponent from "../components/WebViewComponent";
 import SearchContainer from "../views/search/SearchContainer";
 
@@ -20,7 +20,7 @@ const CreateStackNavigation = (screenObj, screenName, option) => {
     screen: SearchContainer,
     navigationOptions: {
       title: "검색",
-      header: null,
+      header: null
     }
   };
   return createStackNavigator(navigationStack);

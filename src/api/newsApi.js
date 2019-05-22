@@ -33,8 +33,7 @@ export const requestData = {
       page: page,
       pageSize: pageSize
     };
-    console.log(category);
-    if (category !== "All") {
+    if (category !== "all") {
       data["category"] = category;
     }
     if (query !== null) {

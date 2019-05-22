@@ -19,7 +19,7 @@ const MainNavigation = createAppContainer(
   createDrawerNavigator(
     {
       All: {
-        screen: CreateStackNavigation(HeadlineContainer, "All", {
+        screen: CreateStackNavigation(HeadlineContainer, "all", {
           title: "최신기사"
         }),
         navigationOptions: commonNavigationOptions("최신기사", "")
@@ -76,47 +76,8 @@ const MainNavigation = createAppContainer(
           // backgroundColor:"red",
         },
         activeBackgroundColor: "#dcdde1",
-        activeTintColor: "black"
-        // activeLabelStyle:{
-        //   fontWeight:"900"
-        // }
+        activeTintColor: "black",
       },
-      // drawerType: "front",
-      // defaultNavigationOptions: ({ navigation }) => ({
-      //   tabBarIcon: () => {
-      //     let icon = "";
-      //     const {
-      //       state: { routeName }
-      //     } = navigation;
-      //     switch (routeName) {
-      //       case "Business":
-      //         icon = `business`;
-      //         break;
-      //       case "General":
-      //         icon = `clipboard`;
-      //         break;
-      //       case "Science":
-      //         icon = "magnet";
-      //         break;
-      //       case "Technology":
-      //         icon = "book";
-      //         break;
-      //       case "Sport":
-      //         icon = "basketball";
-      //         break;
-      //       case "Entertainment":
-      //         icon = "cafe";
-      //         break;
-      //     }
-      //     return LoadIcon(
-      //       `${Platform === "ios" ? "ios" : "md"}-${icon}`,
-      //       12,
-      //       "black",
-      //       navigation,
-      //       routeName
-      //     );
-      //   }
-      // }),
       initialRouteName: "All",
       tabBarOptions: {
         // showIcon: true
